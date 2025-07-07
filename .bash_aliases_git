@@ -1,0 +1,256 @@
+#!/usr/bin/env bash
+
+alias gl="git pull"
+alias gg="git lg"
+alias gs="git st"
+alias gaa="git add --ignore-removal . && git commit --amend"
+alias greset="git reset --hard HEAD"
+alias grs="git reset --hard HEAD"
+alias gb="git branch -a"
+alias gbv="git branch -vv"
+alias gbd="git branch -D"
+alias gr="git remote -v"
+
+gm() {
+  git co main
+  git pull
+  git remote prune origin
+  # git co -
+  # git rebase main
+}
+
+prune() {
+  for rem in $(git remote); do
+    git fetch --prune "$rem"
+    # git remote prune "$rem"
+  done
+  # https://stackoverflow.com/questions/13064613/how-to-prune-local-tracking-branches-that-do-not-exist-on-remote-anymore
+  git branch -r | awk '{print $1}' | egrep -v -f /dev/fd/0 <(git branch -vv | grep origin) | awk '{print $1}' | xargs git branch -d
+  # git branch --merged main | grep -v '^[ *]*main$' | xargs git branch -d
+  # git branch --merged master | grep -v '^[ *]*master$' | xargs git branch -d
+}
+
+# gitsforce() {
+#   if [[ -z $1 ]]; then
+#     echo "[FAIL] missing argument \$1"
+#     return 1
+#   fi
+#   git add --ignore-removal .
+#   git ci -anm "$1"
+# }
+gits() {
+  if [[ -z $1 ]]; then
+    echo "[FAIL] missing argument \$1"
+    return 1
+  fi
+  git add --ignore-removal .
+  git ci -am "$1"
+}
+
+# https://docs.github.com/en/authentication/managing-commit-signature-verification/signing-commits
+# git config commit.gpgsign true
+# gitsign 'feat: PD-114 add public keyvault to landingzones'
+gitsign() {
+  if [[ -z $1 ]]; then
+    echo "[FAIL] missing argument \$1"
+    return 1
+  fi
+  git add --ignore-removal .
+  # git log --show-signature
+  git ci -S -am "$1"
+}
+
+
+gitsnoverify() {
+  if [[ -z $1 ]]; then
+    echo "[FAIL] missing argument \$1"
+    return 1
+  fi
+  git add --ignore-removal .
+  git ci --no-verify -am "$1"
+}
+
+alias gsc="git stash clear"
+alias gsa="git stash apply"
+alias gc="git clone"
+alias gitempty="git commit --allow-empty -m"
+
+gignoresearch() {
+  git ignore-io -s "$1" | grep "$1"
+}
+
+gignore() {
+  git ignore-io "$1" >> .gitignore
+}
+
+
+
+gitDeleteBranchForce() {
+  if [[ -z $1 ]]; then
+    echo "[FAIL] missing branch argument \$1"
+    return 1
+  fi
+  git branch -D "$1"
+}
+
+gitDeleteBranchForceRemotes() {
+  if [[ -z $1 ]]; then
+    echo "[FAIL] missing branch argument \$1"
+    return 1
+  fi
+
+  if git branch -a | grep -q "$1" >/dev/null 2>&1; then
+    git branch -D "$1"
+  fi
+
+  for rem in $(git remote); do
+    if git branch -a | grep -q "remotes/$rem/$1" >/dev/null 2>&1; then
+      git fetch "$rem"
+      git remote prune "$rem"
+    fi
+    if git branch -a | grep -q "remotes/$rem/$1" >/dev/null 2>&1; then
+      git push "$rem" ":$1"
+    fi
+  done
+}
+alias gdb=gitDeleteBranch
+alias gdforce=gitDeleteBranchForce
+
+# git checkout -t remote_name/remote_branch
+alias gcb="git co -b "
+alias gbm="git branch -M "
+alias gcm="git co master"
+
+
+alias gitref="git reflog --all"
+
+
+
+####################
+# diff
+####################
+# alias gdf="git diff --color | diff-so-fancy"
+alias gdiff="git diff --color | diff-so-fancy"
+alias gd=gdiff
+# alias gdt="git difftool"
+
+####################
+# push
+####################
+alias gpr="git pull --rebase"
+alias gra="git rebase --abort"
+alias gpa="git push aws"
+alias gpaf="git push aws --force"
+alias gpo="git push origin"
+alias gpof="git push origin --force"
+alias gpf=gpof
+gp() {
+  for rem in $(git remote); do
+    git push "$rem"
+  done
+}
+gpgit() {
+  git push github
+  gp
+}
+gpfgit() {
+  git push github --force
+  gpf
+}
+
+####################
+# pull
+####################
+
+
+# eg gitSetUpstream github master
+gitSetUpstream() {
+  echo "remote: \$1: $1"
+  echo "branch: \$2: $2"
+  git branch --set-upstream-to "$1/$2"
+}
+gso() {
+  local branch=$(git branch | sed -n -e 's/^\* \(.*\)/\1/p')
+  gitSetUpstream origin "$branch"
+}
+
+
+alias grm="git rm -r --cached "
+alias gtl="git tag -l"
+
+
+# checkout existing branch from remote
+gitco() {
+  local branch=$1
+  local remote=origin
+  if [[ ! -z $2 ]]; then
+    remote=$2
+  fi
+  echo "remote=$remote"
+  git co --track -b "$branch" "$remote/$branch"
+}
+
+
+bin=$HOME/bin
+. "$bin/lib/helpers_utils"
+. "$bin/lib/helpers_validation"
+. "$bin/lib/colours"
+
+gdo() {
+  if [[ -z $1 ]]; then
+    echo "[FAIL] missing argument \$1"
+    return 1
+  fi
+  git branch -d "$1"
+  git push origin ":$1"
+}
+
+gitDeleteBranch() {
+  if git branch -a | grep -q "$1" >/dev/null 2>&1; then
+    git branch -d "$1"
+  fi
+
+  for rem in $(git remote); do
+    if git branch -a | grep -q "remotes/$rem/$1" >/dev/null 2>&1; then
+      git fetch "$rem"
+      git remote prune "$rem"
+    fi
+    if git branch -a | grep -q "remotes/$rem/$1" >/dev/null 2>&1; then
+      git push "$rem" ":$1"
+    fi
+  done
+}
+
+gitRemoveRemotes() {
+  for rem in $(git remote); do
+    git remote rm "$rem"
+  done
+}
+
+####################
+# used in bin/release
+####################
+gitTagAdd () {
+  if [[ -z $1 ]]; then
+    echo "[FAIL] missing argument \$1"
+    return 1
+  fi
+  git tag "$1"
+  for rem in $(git remote); do
+    git push "$rem" --tags
+  done
+}
+
+gitTagDelete() {
+  if [[ -z $1 ]]; then
+    echo "[FAIL] missing argument \$1"
+    return 1
+  fi
+  git tag -d "$1">/dev/null 2>&1
+  for rem in $(git remote); do
+    git push "$rem" :refs/tags/"$1"
+  done
+}
+
+alias gta=gitTagAdd
+alias gtd=gitTagDelete
