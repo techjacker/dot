@@ -5,3 +5,9 @@ alias sdev="./scripts/dev.sh"
 alias sdebug="./scripts/debug.sh"
 alias sup="./scripts/up.sh"
 alias sdown="./scripts/down.sh"
+
+tests() {
+  pushd backend/tribe-ai
+  scripts/test.sh -m "not local_integration and not remote_integration"
+  popd
+}
