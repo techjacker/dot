@@ -19,3 +19,9 @@ function testfile() {
   scripts/test.sh "$test_file"
   popd || exit
 }
+
+function testchat() {
+  pushd backend/chat-api || exit
+  scripts/test.sh -m "not local_integration and not remote_integration"
+  popd || exit
+}
