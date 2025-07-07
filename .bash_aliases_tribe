@@ -6,8 +6,16 @@ alias sdebug="./scripts/debug.sh"
 alias sup="./scripts/up.sh"
 alias sdown="./scripts/down.sh"
 
-tests() {
-  pushd backend/tribe-ai
+function tests() {
+  pushd backend/tribe-ai || exit
   scripts/test.sh -m "not local_integration and not remote_integration"
-  popd
+  popd || exit
+}
+
+function testfile() {
+  local test_file="backend/chat-api/src/guardrails/tests/test_initialize.py"
+  pushd backend/tribe-ai || exit
+  echo "running tests for: $test_file"
+  scripts/test.sh "$test_file"
+  popd || exit
 }
