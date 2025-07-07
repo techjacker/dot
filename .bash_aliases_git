@@ -190,12 +190,6 @@ gitco() {
   git co --track -b "$branch" "$remote/$branch"
 }
 
-
-bin=$HOME/bin
-. "$bin/lib/helpers_utils"
-. "$bin/lib/helpers_validation"
-. "$bin/lib/colours"
-
 gdo() {
   if [[ -z $1 ]]; then
     echo "[FAIL] missing argument \$1"
