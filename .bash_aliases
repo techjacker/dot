@@ -59,7 +59,7 @@ digns() {
 # source
 ##################
 als=()
-als+=("git")
+als+=("git" "tribe")
 for al in "${als[@]}"; do
 	if [[ -s "$HOME/.bash_aliases_${al}" ]]; then
 		. "$HOME/.bash_aliases_${al}"
