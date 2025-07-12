@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 
 alias setup="./scripts/setup.sh"
+alias secrets="./scripts/secrets/setup.sh"
+alias sinject="./scripts/secrets/inject.sh"
 alias slogs="./scripts/logs.sh"
 alias sdev="./scripts/dev.sh"
 alias sdebug="./scripts/debug.sh"
