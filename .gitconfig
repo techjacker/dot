@@ -1,0 +1,133 @@
+[user]
+    name = Andrew Griffiths
+    email = mail@andrewgriffithsonline.com
+    sshCommand = ssh -i ~/.ssh/keyloop
+	# signingkey = 66975751C2E6C5A6
+
+[status]
+    showUntrackedFiles = all
+
+# allowable colors are normal, black, red, green, yellow, blue, magenta, cyan and white.
+[color]
+	diff = auto
+	status = auto
+	branch = auto
+#	ui = true
+#	ui = always
+	ui = auto
+[color "branch"]
+    current = yellow reverse
+    local = yellow
+    remote = green
+[color "diff"]
+    meta = yellow bold
+    frag = magenta bold
+    old = red bold
+    new = green bold
+[color "status"]
+    added = yellow
+    changed = green
+    untracked = cyan
+[color "diff"]
+    whitespace = red reverse
+[giggle]
+	main-window-maximized = true
+	main-window-geometry = 449x175+0+210
+	main-window-view = HistoryView
+	history-view-vpane-position = 47
+	file-view-vpane-position = 111
+[alias]
+    # pimped logs
+    l = log --stat # just stat info
+    log = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+
+    # lg = log --graph --decorate -10 --all --date-order --date=format:'%Y-%m-%d %H:%M:%S' --pretty=format:'%C(cyan)%h%Creset %C(green bold)%ad%Creset%C(auto)%d %s'
+    lg = log --graph --decorate -10 --all --date-order --date=format:'%Y-%m-%d %H:%M:%S' --pretty=format:'%C(cyan)%h%Creset %C(green bold)%ad%Creset%C(auto)%d %s'
+    # show last 10 commit SHA1s
+
+    rev = !git rev-list HEAD | head -10
+    timeline = log --oneline --graph --all
+
+    # https://blog.scottnonnenberg.com/better-git-configuration/
+    prune = fetch --prune
+    undo = reset --soft HEAD^
+    stash-all = stash save --include-untracked
+
+    # list all aliases
+    la = !git config --get-regexp 'alias.*' | colrm 1 6 | sed 's/[ ]/ = /'
+
+    # misc common commands
+    st = status -sb
+    ci = commit
+    cl = clone
+    br = branch
+    co = checkout
+    df = diff
+    dc = diff --cached
+    tg = tag -l -n1
+
+    ##### last commit / changes
+    new = !sh -c 'git log $1@{1}..$1@{0} "$@"' # what new commits have been created by the last command (typically after a "git pull")
+    last = whatchanged -n 1
+    lastfull = diff HEAD^
+    lastfullcached = diff --cached HEAD^
+
+
+    ## commits per user
+    countuser = shortlog -sn
+    ## finding which branch contains a commit
+    contains = branch --contains
+
+    # remove deleted files
+    delboy = ls-files --deleted | xargs git rm
+
+    # solve lots of merge conflicts quickly
+    edit-unmerged = "!f() { git ls-files --unmerged | cut -f2 | sort -u ; }; gedit `f`"
+    add-unmerged = "!f() { git ls-files --unmerged | cut -f2 | sort -u ; }; git add `f`"
+	infoq = info --no-config
+	effort15 = effort --above 15
+	effort5 = effort --above 5
+
+[push]
+    # 'git push' should only do the current branch, not all
+    default = current
+    followTags = true
+
+[pull]
+  rebase = false
+
+[format]
+	pretty = oneline
+
+[core]
+    editor = vi
+    # editor = emacs -nw
+	# editor = emacsclient "$@" -a ""
+    whitespace=fix,-indent-with-non-tab,trailing-space,cr-at-eol
+	# excludesfile = /Users/andy/.gitignore_global
+
+[branch]
+    # auto set up tracking on local branches that have been created based on remote branches
+    # Without this, you will have to add --track to your branch command or manually merge remote tracking branches with “fetch” and then “merge”.
+	autosetupmerge = true
+
+[diff]
+  tool = subl
+  tool = diffuse
+  # tool = kaleidoscope
+
+# https://gist.github.com/josephabrahams/cc7cf4a580304f86f6ad
+# [difftool "kaleidoscope"]
+#     cmd = ksdiff --partial-changeset --relative-path \"$MERGED\" -- \"$LOCAL\" \"$REMOTE\"
+
+[difftool]
+  prompt = false
+
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+
+[url "ssh://git@github.com/"]
+    insteadOf = https://github.com/
