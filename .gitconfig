@@ -1,9 +1,3 @@
-[user]
-    name = Andrew Griffiths
-    email = mail@andrewgriffithsonline.com
-    sshCommand = ssh -i ~/.ssh/keyloop
-	# signingkey = 66975751C2E6C5A6
-
 [status]
     showUntrackedFiles = all
 
