@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+alias setup="./scripts/setup.sh"
 alias slogs="./scripts/logs.sh"
 alias sdev="./scripts/dev.sh"
 alias sdebug="./scripts/debug.sh"
