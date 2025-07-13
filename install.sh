@@ -2,7 +2,7 @@
 
 SCRIPT_DIR=$(dirname "$(realpath "$0")")
 
-cat "$SCRIPT_DIR/.gitconfig" >> "$HOME/.gitconfig"
+# cat "$SCRIPT_DIR/.gitconfig" >> "$HOME/.gitconfig"
 
 if [[ -f $HOME/.bash_aliases ]]; then
 	rm -f "$HOME/.bash_aliases"
