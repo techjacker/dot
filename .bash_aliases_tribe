@@ -5,7 +5,7 @@ alias secrets="./scripts/secrets/setup.sh"
 alias sinject="./scripts/secrets/inject.sh"
 alias slogs="./scripts/logs.sh"
 alias sdev="./scripts/dev.sh"
-alias sdebug="./scripts/debug.sh"
+alias sdebug="./scripts/compose/debug.sh"
 alias sup="./scripts/up.sh"
 alias sdown="./scripts/down.sh"
 
