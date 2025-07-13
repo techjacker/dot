@@ -14,5 +14,7 @@ ln -sf "$SCRIPT_DIR/.bash_aliases_extra" "$HOME/.bash_aliases_extra"
 ln -sf "$SCRIPT_DIR/.gitconfig" "$HOME/.gitconfig.andy"
 
 
-# [include]
-#     path = /home/vscode/.gitconfig.andy
+if ! grep -q include "$HOME/.gitconfig"; then
+  cat "$SCRIPT_DIR/.gitconfig.include" >> "$HOME/.gitconfig"
+fi
+
