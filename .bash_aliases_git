@@ -9,6 +9,7 @@ alias grs="git reset --hard HEAD"
 alias gb="git branch -a"
 alias gbv="git branch -vv"
 alias gbd="git branch -D"
+alias gdb="git branch -D"
 alias gr="git remote -v"
 
 gm() {
@@ -83,44 +84,10 @@ gignore() {
   git ignore-io "$1" >> .gitignore
 }
 
-
-
-gitDeleteBranchForce() {
-  if [[ -z $1 ]]; then
-    echo "[FAIL] missing branch argument \$1"
-    return 1
-  fi
-  git branch -D "$1"
-}
-
-gitDeleteBranchForceRemotes() {
-  if [[ -z $1 ]]; then
-    echo "[FAIL] missing branch argument \$1"
-    return 1
-  fi
-
-  if git branch -a | grep -q "$1" >/dev/null 2>&1; then
-    git branch -D "$1"
-  fi
-
-  for rem in $(git remote); do
-    if git branch -a | grep -q "remotes/$rem/$1" >/dev/null 2>&1; then
-      git fetch "$rem"
-      git remote prune "$rem"
-    fi
-    if git branch -a | grep -q "remotes/$rem/$1" >/dev/null 2>&1; then
-      git push "$rem" ":$1"
-    fi
-  done
-}
-alias gdb=gitDeleteBranch
-alias gdforce=gitDeleteBranchForce
-
 # git checkout -t remote_name/remote_branch
 alias gcb="git co -b "
 alias gbm="git branch -M "
 alias gcm="git co master"
-
 
 alias gitref="git reflog --all"
 
