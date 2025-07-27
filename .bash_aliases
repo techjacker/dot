@@ -35,9 +35,10 @@ bak() {
   cp -r "$1"{,.bak}
 }
 
-# $1 = lengtb of password
+# $1 = length of password
 secret() {
-  openssl rand -base64 "$1"
+  source /workspaces/platformproduct-enablementai-oem-integration/secrets.env
+  # openssl rand -base64 "$1"
 }
 
 diskUsage() {
