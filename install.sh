@@ -18,3 +18,11 @@ if ! grep -q include "$HOME/.gitconfig"; then
   cat "$SCRIPT_DIR/.gitconfig.include" >> "$HOME/.gitconfig"
 fi
 
+installBashmarks() {
+  git clone https://github.com/huyng/bashmarks.git
+  pushd bashmarks
+  make install
+  popd
+}
+
+installBashmarks

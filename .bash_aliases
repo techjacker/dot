@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+[[ -s $HOME/bashmarks.sh ]] && source $HOME/bashmarks.sh
+
 alias e="source .env"
 alias ee="source .env.example"
 
