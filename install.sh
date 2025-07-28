@@ -19,10 +19,15 @@ if ! grep -q include "$HOME/.gitconfig"; then
 fi
 
 installBashmarks() {
-  git clone https://github.com/huyng/bashmarks.git
-  pushd bashmarks
-  make install
-  popd
+  if [[ ! -d $HOME/bashmarks ]]; then
+    git clone https://github.com/huyng/bashmarks.git
+    pushd bashmarks
+    make install
+    popd
+  else
+    cd bashmarks
+    git pull origin
+  fi
 }
 
 installBashmarks
