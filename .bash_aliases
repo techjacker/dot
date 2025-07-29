@@ -11,7 +11,7 @@ for al in "${als[@]}"; do
   fi
 done
 
-[[ -s $HOME/bashmarks.sh ]] && source $HOME/bashmarks.sh
+[[ -s $HOME/.local/bin/bashmarks.sh ]] && source $HOME/.local/bin/bashmarks.sh
 
 alias e="source .env"
 alias ee="source .env.example"
