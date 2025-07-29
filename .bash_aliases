@@ -6,9 +6,10 @@
 als=()
 als+=("git" "extra", "precommit")
 for al in "${als[@]}"; do
-  if [[ -s "$HOME/.bash_aliases_${al}" ]]; then
-    . "$HOME/.bash_aliases_${al}"
-  fi
+  # if [[ -s "$HOME/.bash_aliases_${al}" ]]; then
+  #   source "$HOME/.bash_aliases_${al}"
+  # fi
+  source "$HOME/.bash_aliases_${al}"
 done
 
 [[ -s $HOME/.local/bin/bashmarks.sh ]] && source $HOME/.local/bin/bashmarks.sh
