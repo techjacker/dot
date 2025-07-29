@@ -1,9 +1,7 @@
 #!/usr/bin/env bash
 
 precommitrun() {
-  pre-commit run \
-    --all-files \
-    --verbose
+  pre-commit run --all-files
 }
 
 precommitinstall() {
