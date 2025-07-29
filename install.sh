@@ -14,7 +14,6 @@ ln -sf "$SCRIPT_DIR/.bash_aliases_extra" "$HOME/.bash_aliases_extra"
 ln -sf "$SCRIPT_DIR/.bash_aliases_precommit" "$HOME/.bash_aliases_precommit"
 ln -sf "$SCRIPT_DIR/.gitconfig" "$HOME/.gitconfig.andy"
 
-
 if ! grep -q include "$HOME/.gitconfig"; then
   cat "$SCRIPT_DIR/.gitconfig.include" >> "$HOME/.gitconfig"
 fi
