@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+precommitrun() {
+  pre-commit run \
+    --all-files \
+    --verbose
+}
+
+precommitinstall() {
+  pre-commit install
+  pre-commit install-hooks
+}
+
+alias pri=precommitinstall
+alias prr=precommitrun
+alias pra="pre-commit autoupdate"
+alias prclean="pre-commit clean"
+alias pruinstall="pre-commit uninstall"
