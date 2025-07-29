@@ -1,5 +1,16 @@
 #!/usr/bin/env bash
 
+##################
+# source
+##################
+als=()
+als+=("git" "extra", "precommit")
+for al in "${als[@]}"; do
+  if [[ -s "$HOME/.bash_aliases_${al}" ]]; then
+    . "$HOME/.bash_aliases_${al}"
+  fi
+done
+
 [[ -s $HOME/bashmarks.sh ]] && source $HOME/bashmarks.sh
 
 alias e="source .env"
@@ -57,16 +68,5 @@ alias etc="sudo vim /etc/hosts"
 digns() {
   dig @8.8.8.8 +short NS "$1"
 }
-
-##################
-# source
-##################
-als=()
-als+=("git" "extra")
-for al in "${als[@]}"; do
-	if [[ -s "$HOME/.bash_aliases_${al}" ]]; then
-		. "$HOME/.bash_aliases_${al}"
-	fi
-done
 
 export GLOBIGNORE=.:..
