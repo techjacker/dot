@@ -4,7 +4,7 @@
 # source
 ##################
 als=()
-als+=("git" "extra", "precommit")
+als+=("git" "extra" "precommit")
 for al in "${als[@]}"; do
   # if [[ -s "$HOME/.bash_aliases_${al}" ]]; then
   #   source "$HOME/.bash_aliases_${al}"
