@@ -9,6 +9,7 @@ for al in "${als[@]}"; do
   # if [[ -s "$HOME/.bash_aliases_${al}" ]]; then
   #   source "$HOME/.bash_aliases_${al}"
   # fi
+  echo "sourcing: $HOME/.bash_aliases_${al}"
   source "$HOME/.bash_aliases_${al}"
 done
 
