@@ -1,16 +1,12 @@
 #!/usr/bin/env bash
 
-precommitrun() {
-  pre-commit run --all-files
-}
-
 precommitinstall() {
   pre-commit install
   pre-commit install-hooks
 }
 
 alias pri=precommitinstall
-alias prr=precommitrun
+alias prr="pre-commit run --all-files"
+alias prrskip="SKIP='' pre-commit run --all-files"
 alias pra="pre-commit autoupdate"
-alias prclean="pre-commit clean"
-alias pruinstall="pre-commit uninstall"
+alias pru="pre-commit uninstall"
