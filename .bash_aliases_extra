@@ -1,30 +1,40 @@
 #!/usr/bin/env bash
 
-alias setup="./scripts/setup.sh"
-alias secrets="./scripts/secrets/setup.sh"
-alias sinject="./scripts/secrets/inject.sh"
+# alias setup="./scripts/setup.sh"
+# alias secrets="./scripts/secrets/setup.sh"
+# alias sinject="./scripts/secrets/inject.sh"
 alias slogs="./scripts/logs.sh"
+alias stests="./scripts/e2e.sh"
 alias sdev="./scripts/dev.sh"
 alias sdebug="./scripts/compose/debug.sh"
-alias sup="./scripts/up.sh"
+# alias sup="./scripts/up.sh"
 alias sdown="./scripts/down.sh"
 
-function tests() {
-  pushd backend/tribe-ai || exit
-  scripts/test.sh -m "not local_integration and not remote_integration"
-  popd || exit
+function sdevdownup() {
+  sdown && sdev
 }
 
-function testfile() {
-  local test_file="backend/chat-api/src/guardrails/tests/test_initialize.py"
-  pushd backend/tribe-ai || exit
-  echo "running tests for: $test_file"
-  scripts/test.sh "$test_file"
-  popd || exit
+function stestsdownup() {
+  sdown && stests
 }
 
-function testchat() {
+# function tests() {
+#   pushd backend/tribe-ai || exit
+#   scripts/test.sh -m "not local_integration and not remote_integration"
+#   popd || exit
+# }
+
+# function testfile() {
+#   local test_file="backend/chat-api/src/guardrails/tests/test_initialize.py"
+#   pushd backend/tribe-ai || exit
+#   echo "running tests for: $test_file"
+#   scripts/test.sh "$test_file"
+#   popd || exit
+# }
+
+function testunit() {
   pushd backend/chat-api || exit
-  scripts/test.sh -m "not local_integration and not remote_integration"
+  ./scripts/test_unit.sh
+  # scripts/test.sh -m "not local_integration and not remote_integration"
   popd || exit
 }
