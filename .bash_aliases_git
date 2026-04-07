@@ -97,8 +97,8 @@ alias gitref="git reflog --all"
 # diff
 ####################
 # alias gdf="git diff --color | diff-so-fancy"
-alias gdiff="git diff --color | diff-so-fancy"
-alias gd=gdiff
+# alias gdiff="git diff --color | diff-so-fancy"
+alias gd="git diff"
 # alias gdt="git difftool"
 
 ####################
