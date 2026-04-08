@@ -10,7 +10,7 @@ alias sdebug="./scripts/compose/debug.sh"
 # alias sup="./scripts/up.sh"
 alias sdown="./scripts/down.sh"
 
-function sdevdownup() {
+function sdownup() {
   sdown && sdev
 }
 
